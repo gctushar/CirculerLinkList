@@ -90,7 +90,7 @@ public class CircularLinkedList<AnyType> implements List<AnyType> {
     public void add(int index, AnyType newValue) {
 
         int now = 0;
-        s
+
         if (index == 0) {
             tail = new Node(newValue, null);
             tail.next = tail;
@@ -105,6 +105,9 @@ public class CircularLinkedList<AnyType> implements List<AnyType> {
             Node temp = new Node(newValue, nowNode.next);
             nowNode.next = temp;
 
+            if (index > theSize) {
+                tail = temp;
+            }
         }
 
         theSize++;
@@ -143,11 +146,12 @@ public class CircularLinkedList<AnyType> implements List<AnyType> {
     }
 
     public void rotate() {
-
+        tail = tail.next;
     }
 
     public Iterator<AnyType> iterator() {
-        return new LinkedListIterator();
+//        return new LinkedListIterator();
+        return null;
     }
 
     private Node<AnyType> getNode(int index) {
@@ -164,7 +168,7 @@ public class CircularLinkedList<AnyType> implements List<AnyType> {
         return nowNode;
 
     }
-
+    /*
     private class LinkedListIterator implements Iterator<AnyType> {
 
         private Node<AnyType> previous;
@@ -188,4 +192,5 @@ public class CircularLinkedList<AnyType> implements List<AnyType> {
 
         }
     }
+     */
 }
