@@ -38,11 +38,17 @@ public class CircularLinkedList<AnyType> implements List<AnyType> {
     private Node<AnyType> tail;
 
     public CircularLinkedList() {
+        theSize = 0;
+        modCount = 0;
+        tail = null;
 
     }
 
     public void clear() {
-
+        theSize = 0;
+        modCount = 0;
+        tail = null;
+        return;
     }
 
     public int size() {
@@ -57,7 +63,7 @@ public class CircularLinkedList<AnyType> implements List<AnyType> {
     }
 
     public AnyType get(int index) {
-        
+
         Node nowNode = tail;
         for (int now = 0; now < index; now++) {
             nowNode = nowNode.next;
@@ -66,14 +72,13 @@ public class CircularLinkedList<AnyType> implements List<AnyType> {
     }
 
     public AnyType set(int index, AnyType newValue) {
-        
-        Node nowNode = tail;        
+
+        Node nowNode = tail;
         for (int now = 0; now < index; now++) {
             nowNode = nowNode.next;
         }
         nowNode.setData(newValue);
         return (AnyType) nowNode.data;
-        
 
     }
 
@@ -85,7 +90,7 @@ public class CircularLinkedList<AnyType> implements List<AnyType> {
     public void add(int index, AnyType newValue) {
 
         int now = 0;
-
+        s
         if (index == 0) {
             tail = new Node(newValue, null);
             tail.next = tail;
@@ -109,6 +114,32 @@ public class CircularLinkedList<AnyType> implements List<AnyType> {
 
     public AnyType remove(int index) {
 
+        Node nowNode = tail;
+        if (theSize == 0 || tail == null) {
+            return null;
+        }
+        if (theSize == 1) {
+            AnyType data = tail.data;
+            theSize = 0;
+            modCount = 0;
+            tail = null;
+            return data;
+        }
+
+        for (int now = 1; now < index; now++) {
+            nowNode = nowNode.next;
+        }
+
+        Node temp = nowNode.next;
+        nowNode.next = null;
+        nowNode.next = temp.next;
+        if (index == theSize) {
+            tail = nowNode;
+        }
+        theSize--;
+
+        return (AnyType) temp.getData();
+
     }
 
     public void rotate() {
@@ -124,6 +155,13 @@ public class CircularLinkedList<AnyType> implements List<AnyType> {
     }
 
     private Node<AnyType> getNode(int index, int lower, int upper) {
+
+        Node nowNode = tail;
+        for (int now = 0; now < index; now++) {
+            nowNode = nowNode.next;
+        }
+
+        return nowNode;
 
     }
 
