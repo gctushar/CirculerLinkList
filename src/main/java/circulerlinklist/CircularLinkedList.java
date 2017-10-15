@@ -150,8 +150,7 @@ public class CircularLinkedList<AnyType> implements List<AnyType> {
     }
 
     public Iterator<AnyType> iterator() {
-//        return new LinkedListIterator();
-        return null;
+        return new LinkedListIterator();
     }
 
     private Node<AnyType> getNode(int index) {
@@ -168,7 +167,7 @@ public class CircularLinkedList<AnyType> implements List<AnyType> {
         return nowNode;
 
     }
-    /*
+
     private class LinkedListIterator implements Iterator<AnyType> {
 
         private Node<AnyType> previous;
@@ -177,14 +176,25 @@ public class CircularLinkedList<AnyType> implements List<AnyType> {
         private boolean okToRemove;
 
         LinkedListIterator() {
-
+            previous = tail;
+            current = tail.next;
+            expectedModCount = 1;
+            okToRemove = true;
         }
 
         public boolean hasNext() {
-
+            return !isEmpty() && expectedModCount <= theSize;
         }
 
         public AnyType next() {
+            if (!hasNext()) {
+                throw new NoSuchElementException();
+            }
+            AnyType res = current.data;
+            previous = current;
+            current = current.next;
+            expectedModCount++;
+            return res;
 
         }
 
@@ -192,5 +202,5 @@ public class CircularLinkedList<AnyType> implements List<AnyType> {
 
         }
     }
-     */
+
 }
